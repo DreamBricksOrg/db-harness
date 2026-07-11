@@ -1,18 +1,18 @@
 {
-  "name": "beer-and-code",
+  "name": "dreambricks",
   "owner": {
-    "name": "Beer and Code",
-    "email": "administrador@beerandcode.com.br"
+    "name": "izanette",
+    "email": "dudu@dreambricks.com.br"
   },
   "metadata": {
-    "description": "Beer and Code harness marketplace — commands, scripts, and hooks for building robust, tested, real-world-proven projects.",
-    "version": "0.2.0"
+    "description": "Dreambricks harness marketplace — commands, scripts, and hooks for building robust, tested, real-world-proven projects.",
+    "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "bc-harness",
+      "name": "db-harness",
       "source": "./",
-      "description": "Beer and Code harness — commands, scripts, and hooks to help developers build robust, scalable, tested, real-world-proven projects."
+      "description": "Dreambricks — commands, scripts, and hooks to help developers build robust, scalable, tested, real-world-proven projects."
     }
   ]
 }
