@@ -305,7 +305,17 @@ resolve_test_cmd() {
   elif [ -f package.json ] && grep -qE '"test"[[:space:]]*:' package.json; then
     TEST_CMD="npm test"
   elif [ -f pytest.ini ] || { [ -f pyproject.toml ] && grep -qF '[tool.pytest' pyproject.toml; }; then
-    TEST_CMD="pytest"
+    # pytest pode estar preso num virtualenv gerenciado (uv/Poetry/Pipenv) e
+    # fora do PATH do host; `pytest` puro mentiria como gate nesse caso.
+    if [ -f uv.lock ]; then
+      TEST_CMD="uv run pytest"
+    elif [ -f pyproject.toml ] && grep -qF '[tool.poetry]' pyproject.toml; then
+      TEST_CMD="poetry run pytest"
+    elif [ -f Pipfile ]; then
+      TEST_CMD="pipenv run pytest"
+    else
+      TEST_CMD="pytest"
+    fi
   elif [ -f go.mod ]; then
     TEST_CMD="go test ./..."
   elif [ -f Cargo.toml ]; then

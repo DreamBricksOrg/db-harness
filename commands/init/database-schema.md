@@ -77,6 +77,7 @@ Derive as much of the schema as you can directly from the docs, then find what's
 - **Ownership & tenancy** — who owns a record; whether data is scoped per user/team/tenant.
 - **Soft deletes vs hard deletes** — which entities need `deleted_at`.
 - **Categorical fields** — every status/type/category/priority/role → which values seed the lookup table.
+- **Enum convention** — ask once whether categorical fields use the lookup-table convention (default; see DB Guidelines) or the database's native enum type. Record the choice in `## Notes & Conventions` (e.g. "uses native DB enums per developer choice"); if unanswered, default to lookup tables.
 - **Uniqueness & required fields** — which columns are `unique`, which are `not null`.
 
 Use `AskUserQuestion` for discrete decisions with clear options. Ask real open questions in plain text when the answer is not a menu. Batch related questions; don't drip one at a time. When something stays undecided, mark it as an open question rather than inventing a column.
@@ -148,7 +149,7 @@ Rules for the document:
 
 ### Stack conventions (detect, then apply)
 
-Apply the naming and column conventions of the **framework/ORM detected in step 1** — table naming, primary key shape, foreign key naming, timestamp columns, join/pivot table naming, soft-delete column. Follow that stack's documented defaults (e.g. Eloquent, ActiveRecord, Django ORM, Prisma, TypeORM, GORM, Ecto). Never mix conventions from two stacks in one schema.
+Apply the naming and column conventions of the **framework/ORM detected in step 1** — table naming, primary key shape, foreign key naming, timestamp columns, join/pivot table naming, soft-delete column. Follow that stack's documented defaults (e.g. Eloquent, ActiveRecord, Django ORM, SQLAlchemy, Prisma, TypeORM, GORM, Ecto). Never mix conventions from two stacks in one schema.
 
 When no framework/ORM is detected, use this default profile:
 
@@ -204,7 +205,7 @@ grep -Fq '## Relationships' "$F"
 grep -Fq '## Lookup Table Seeds' "$F"
 grep -Fq '## Notes & Conventions' "$F"
 [ "$(grep -cE '^Table [a-z0-9_]+ \{' "$F")" -ge 1 ]     # >=1 table declared
-! grep -iqE '^ +[a-z0-9_]+ +enum' "$F"                  # house rule: no enum columns
+grep -qi 'native db enum' "$F" || ! grep -iqE '^ +[a-z0-9_]+ +enum' "$F"  # house rule: no enum columns (skipped if the developer opted into native DB enums — see Notes & Conventions)
 # every ref target must be a declared Table (loop must print nothing)
 for t in $(grep -oE 'ref: *[<>-]+ *[a-z0-9_]+\.' "$F" | grep -oE '[a-z0-9_]+\.' | tr -d '.' | sort -u); do
   grep -qE "^Table $t \{" "$F" || echo "ref target without table: $t"

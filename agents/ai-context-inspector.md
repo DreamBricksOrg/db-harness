@@ -31,7 +31,7 @@ Inspect in this order, shallow-first. Prefer manifests and config over reading s
 5. **Tests** — runner, assertion/mock libraries, coverage tool, test directory layout.
 6. **Dependencies** — runtime deps and dev deps from the manifest, with the apparent purpose of each non-obvious one.
 7. **Entrypoints** — HTTP server, CLI binaries, queue workers, scheduled jobs, `Dockerfile`/`docker-compose.yml`.
-8. **API surface signals** — routes files, controllers/handlers dirs, OpenAPI/GraphQL schemas. List concrete file paths.
+8. **API surface signals** — routes files, controllers/handlers/routers dirs, OpenAPI/GraphQL schemas. List concrete file paths.
 9. **Async signals** — queue/bus/broker config or clients (SQS, Kafka, RabbitMQ, Redis queues, Laravel queues/Horizon, BullMQ, cron/schedulers). List evidence paths.
 10. **Persistence signals** — migrations dir, ORM models/entities, `schema.prisma`, `*.sql`, DB config. List evidence paths.
 11. **Domain signals** — the 3–10 modules/classes/dirs that look like the business core (services, actions, aggregates, state machines, rule tables). List paths + one-line guess of responsibility. This is a map for the docs writer, not a conclusion.

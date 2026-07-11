@@ -77,11 +77,13 @@ Any output → warn the developer ("input changed after this artifact was genera
 
 ### 2. Inspect the codebase to detect what is already done
 
+Extract the framework/ORM from the project description's Tech Stack section — they determine where persistence, models, and tests actually live. Confirm against the codebase manifest (`composer.json`, `package.json`, `pyproject.toml`, `go.mod`, `Gemfile`, …) or a quick `Glob` when one exists; do not assume Laravel's layout.
+
 Scan the project so you can mark completed work:
 
-- Migrations (`database/migrations/`), models (`app/Models/`), seeders/factories.
+- Migrations/schema and models in the detected stack's own layout (e.g. `database/migrations/` + `app/Models/` for Laravel, `alembic/versions/` + `app/models/` for FastAPI+SQLAlchemy, `prisma/migrations/` + `schema.prisma` for Prisma), seeders/factories.
 - Frontend components, pages/screens, routes.
-- Existing tests (`tests/`), controllers, services, form requests, policies.
+- Existing tests (wherever the stack's test runner looks for them), controllers/handlers/routers, services, request validation, authorization/policy layers.
 
 For each task you define, check whether the code already satisfies it. If it does, mark it `[x]`; otherwise `[ ]`. When partially done, mark `[ ]` and note in the task what remains.
 
