@@ -31,11 +31,11 @@ Any check fails → halt with `precondition_failed: <reason>` instead of produci
 
 ## AS IS / TO BE sections
 
-- **AS IS is mandatory unless greenfield.** Inline mermaid diagram of the current-state slice the feature touches — only that slice, never the whole system. Greenfield → the literal `_AS IS não aplicável — feature greenfield._`, no synthetic diagram.
-- **TO BE is mandatory.** Same diagram type as AS IS (diffable pair). New/changed elements annotated (`(novo)`, `(alterado)`, or `NEW_` id prefix) — never color alone. Every new/changed node traces to ≥ 1 RIGID id (RF/UI/CT), cited in the caption.
+- **AS IS is mandatory unless greenfield.** Inline mermaid diagram of the current-state slice the feature touches — only that slice, never the whole system. Greenfield → the literal `_AS IS not applicable — feature greenfield._`, no synthetic diagram.
+- **TO BE is mandatory.** Same diagram type as AS IS (diffable pair). New/changed elements annotated (`(new)`, `(changed)`, or `NEW_` id prefix) — never color alone. Every new/changed node traces to ≥ 1 RIGID id (RF/UI/CT), cited in the caption.
 - Diagram type by SPEC shape: `flowchart` backend/data flows; `sequenceDiagram` when actor/message order is central; `classDiagram` domain-model heavy; `graph` UI navigation.
-- Nodes naming real code MUST be verified (Grep first); unverified nodes get a `?` suffix. TO BE nodes for code that does not exist yet are allowed, annotated `(novo)`.
-- Caption below each diagram in PT-BR, 1–3 sentences.
+- Nodes naming real code MUST be verified (Grep first); unverified nodes get a `?` suffix. TO BE nodes for code that does not exist yet are allowed, annotated `(new)`.
+- Caption below each diagram, 1–3 sentences.
 - **Mermaid hygiene**: line breaks via `<br/>` (never `\n`); quote any label containing `|`, `(`, `)`, `<`, `>`, `/`, `:`, `,`, `{`, `}` or whitespace + punctuation — pipe is the edge-label delimiter and breaks unquoted labels. Re-read both blocks before saving; reject violations.
 
 ## Decision Rules
@@ -70,7 +70,7 @@ Any check fails → halt with `precondition_failed: <reason>` instead of produci
 ## Context
 <Problem statement from the confirmed description, enriched with codebase/init-chain findings>
 
-## AS IS — Estado atual
+## AS IS — Current State
 
 ```mermaid
 flowchart LR
@@ -78,17 +78,17 @@ flowchart LR
   ModuleA -->|reads| StoreA[(datastore)]
 ```
 
-<Legenda PT-BR (1–3 frases). Greenfield: substituir o bloco inteiro por `_AS IS não aplicável — feature greenfield._`>
+<Caption (1–3 sentences). Greenfield: replace the entire block with `_AS IS not applicable — feature greenfield._`>
 
-## TO BE — Estado proposto
+## TO BE — Proposed State
 
 ```mermaid
 flowchart LR
   Actor -->|action| ModuleA
-  ModuleA -->|invokes| NEW_ServiceZ["ServiceZ (novo)"]
+  ModuleA -->|invokes| NEW_ServiceZ["ServiceZ (new)"]
 ```
 
-<Legenda PT-BR (1–3 frases) citando os ids RIGID (RF-XX, UI-XX, CT-XX) que cada nó novo/alterado realiza.>
+<Caption (1–3 sentences) citing the RIGID ids (RF-XX, UI-XX, CT-XX) that each new/changed node fulfills.>
 
 ## Scope
 - **In**: <covered>

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# check-shell.sh — sanidade dos scripts de shell do harness.
+# check-shell.sh — sanity checks for the harness's shell scripts.
 #
-#   1. bash -n em todo scripts/*.sh (sempre roda; so precisa de bash)
-#   2. shellcheck quando disponivel (dev-only; ausencia nao falha o check)
+#   1. bash -n over every scripts/*.sh (always runs; only needs bash)
+#   2. shellcheck when available (dev-only; absence doesn't fail the check)
 #
-# Uso: scripts/check-shell.sh   (de qualquer lugar; exit 0 = limpo)
+# Usage: scripts/check-shell.sh   (from anywhere; exit 0 = clean)
 
 set -u
 cd "$(dirname "$0")/.." || exit 1
@@ -13,12 +13,12 @@ cd "$(dirname "$0")/.." || exit 1
 FAIL=0
 FILES=(scripts/*.sh)
 
-echo "== bash -n (${#FILES[@]} arquivos)"
+echo "== bash -n (${#FILES[@]} files)"
 for f in "${FILES[@]}"; do
   if bash -n "$f" 2>/dev/null; then
     echo "  ok    $f"
   else
-    echo "  ERRO  $f"
+    echo "  ERROR $f"
     bash -n "$f" 2>&1 | sed 's/^/        /'
     FAIL=1
   fi
@@ -35,13 +35,13 @@ if command -v shellcheck > /dev/null 2>&1; then
     fi
   done
 else
-  echo "== shellcheck AUSENTE — pulado (instale: apt install shellcheck)"
+  echo "== shellcheck MISSING — skipped (install: apt install shellcheck)"
 fi
 
 echo
 if [ "$FAIL" -eq 0 ]; then
-  echo "OK: shell limpo."
+  echo "OK: shell is clean."
 else
-  echo "FALHA: corrija os problemas acima."
+  echo "FAILURE: fix the issues above."
 fi
 exit "$FAIL"
